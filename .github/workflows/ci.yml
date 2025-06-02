@@ -14,7 +14,7 @@ jobs:
     steps:
     - name: Show login info
       run: |
-        echo "Hello! My name is $ {{ secrets.MY_LOGIN }}. My password is ${{ secrets.MY_PASSWORD }}."
+        echo "Hello! My name is ${{ secrets.MY_LOGIN }}. My password is ${{ secrets.MY_PASSWORD }}."
 
   lint:
     runs-on: ubuntu-latest
