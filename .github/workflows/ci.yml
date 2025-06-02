@@ -1,4 +1,4 @@
-name: auto-tests
+name: auto-tests-mlops
 
 on:
   push:
