@@ -54,3 +54,17 @@ jobs:
         pip install -r requirements.txt
         pip install pytest
     - run: pytest tests/integration
+
+name: Placeholder CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  noop:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello from main - placeholder"
