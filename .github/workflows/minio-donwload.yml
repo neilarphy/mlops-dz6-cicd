@@ -1,6 +1,7 @@
 name: Download from MinIO
 
 on:
+  push:
   pull_request:
   workflow_dispatch:
 
