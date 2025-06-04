@@ -1,10 +1,9 @@
-name: Placeholder CI
+name: auto-tests-mlops
 
 on:
   push:
-    branches: [main]
   pull_request:
-    branches: [main]
+  workflow_dispatch:
 
 jobs:
   noop:
