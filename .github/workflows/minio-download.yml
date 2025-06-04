@@ -1,0 +1,30 @@
+name: Download from MinIO
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install mc 
+        run: |
+          sudo apt-get update && sudo apt-get install -y curl
+          curl https://dl.min.io/client/mc/release/linux-amd64/mc --create-dirs -o $HOME/minio-binaries/mc
+          chmod +x $HOME/minio-binaries/mc
+          echo "$HOME/minio-binaries" >> $GITHUB_PATH
+
+      - name: Setup alias
+        run: |
+          mc alias set ${{ secrets.MINIO_ALIAS }} ${{ secrets.MINIO_ENDPOINT }} ${{ secrets.MINIO_ACCESS_KEY }} ${{ secrets.MINIO_SECRET_KEY }}
+
+      - name: Download file
+        run: |
+          mkdir -p ./data
+          mc cp ${{ secrets.MINIO_ALIAS }}/${{ secrets.MINIO_BUCKET_NAME }}/${{ secrets.MINIO_FILE_PATH }} ./data/${{ secrets.LOCAL_FILE_PATH }}
+
+      - name: Check MD5 hash
+        run: |
+          echo "${{ secrets.EXPECTED_MD5 }}  ./data/${{ secrets.LOCAL_FILE_PATH }}" | md5sum -c -
